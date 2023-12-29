@@ -4,6 +4,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:khatri_alter/data/model/fb_auth_model.dart';
 import 'package:khatri_alter/data/utils/images.dart';
 import 'package:khatri_alter/data/utils/colors.dart';
 import 'package:khatri_alter/data/utils/text_style.dart';
@@ -130,8 +131,13 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      signInWithFacebook();
+                    onTap: () async {
+                      try {
+                        Resource? userCredential = await signInWithFacebook();
+                        if (context.mounted) {
+                          Get.to(() => const RegistrationFormView());
+                        }
+                      } catch (e) {}
                     },
                     child: Image.asset(
                       ImageResources.fbIcn,
@@ -139,7 +145,16 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () async {
+                      try {
+                        UserCredential userCredential =
+                            await signUpWtihGithub();
+                        if (context.mounted) {
+                          Get.to(() => const RegistrationFormView());
+                          print(userCredential.user);
+                        }
+                      } catch (e) {}
+                    },
                     child: Image.asset(
                       ImageResources.gitIcn,
                       height: 5.h,
@@ -172,32 +187,8 @@ class _LoginViewState extends State<LoginView> {
     }
   }
 
-  // Future<void> signInWithFacebook() async {
-  //   try {
-  //     // Trigger Facebook login
-  //     final LoginResult result = await FacebookAuth.instance.login();
-
-  //     // Check if the login was successful
-  //     if (result.status == LoginStatus.success) {
-  //       // Get the access token and use it to sign in with Firebase
-  //       final AccessToken accessToken = result.accessToken!;
-  //       AuthCredential credential = FacebookAuthProvider.credential(accessToken.token);
-
-  //       // Sign in with Firebase
-  //       UserCredential userCredential =
-  //           await FirebaseAuth.instance.signInWithCredential(credential);
-
-  //       // Check if the user signed in successfully
-  //       if (userCredential.user != null) {
-  //         print(userCredential.user?.displayName);
-
-  //         // Navigate to another screen or perform other actions upon successful login
-  //       }
-  //     } else {
-  //       print('Facebook login failed. Status: ${result.status}');
-  //     }
-  //   } catch (error) {
-  //     print('Error signing in with Facebook: $error');
-  //   }
-  // }
+  Future<UserCredential> signUpWtihGithub() async {
+    GithubAuthProvider githubProvider = GithubAuthProvider();
+    return await FirebaseAuth.instance.signInWithProvider(githubProvider);
+  }
 }
