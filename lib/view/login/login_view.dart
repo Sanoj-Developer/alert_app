@@ -87,7 +87,7 @@ class _LoginViewState extends State<LoginView> {
                             context,
                             MaterialPageRoute(
                                 builder: ((context) => VerifyScreen(
-                                      verficationCode: verficatioinCode,
+                                      verificationCode: verficatioinCode,
                                     ))));
                         setState(() {
                           loading = false;
