@@ -4,8 +4,10 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> verifyPhoneNumber(
-      String phoneNumber, Function(PhoneAuthCredential) verificationCompleted,
-      Function(String) verificationFailed, Function(String) codeSent,
+      String phoneNumber,
+      Function(PhoneAuthCredential) verificationCompleted,
+      Function(String) verificationFailed,
+      Function(String) codeSent,
       Function(String) codeAutoRetrievalTimeout) async {
     await _auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
@@ -25,7 +27,8 @@ class AuthService {
     );
   }
 
-  Future<UserCredential?> signInWithPhone(PhoneAuthCredential credential) async {
+  Future<UserCredential?> signInWithPhone(
+      PhoneAuthCredential credential) async {
     try {
       return await _auth.signInWithCredential(credential);
     } catch (e) {
