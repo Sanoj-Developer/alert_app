@@ -13,7 +13,7 @@ class Routes {
   static final List<GetPage> pages = [
     GetPage(name: initial, page: () => const SplashView()),
     GetPage(name: login, page: () => const LoginView()),
-    GetPage(name: signUp, page: () => SignUpView()),
+    GetPage(name: signUp, page: () => const SignUpView()),
     GetPage(name: registrationForm, page: () => const RegistrationFormView()),
   ];
 }

@@ -14,7 +14,7 @@ class SignUpView extends StatelessWidget {
   Widget build(BuildContext context) {
     final nameController = TextEditingController();
     final mobileController = TextEditingController();
-    final PasswordController = TextEditingController();
+    final passwordController = TextEditingController();
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.bgColors,
@@ -39,7 +39,7 @@ class SignUpView extends StatelessWidget {
                 height: 2.h,
               ),
               CustomTextFiled(
-                controller: PasswordController,
+                controller: passwordController,
                 hintText: "Password",
               ),
               SizedBox(
